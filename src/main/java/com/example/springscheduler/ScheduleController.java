@@ -1,6 +1,6 @@
 package com.example.springscheduler;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
@@ -8,16 +8,14 @@ import org.springframework.scheduling.support.CronTrigger;
 import java.util.concurrent.ScheduledFuture;
 
 @Configuration
+@RequiredArgsConstructor
 public class ScheduleController {
 
-    @Autowired
-    private ThreadPoolTaskScheduler taskScheduler;
+    private final ThreadPoolTaskScheduler taskScheduler;
 
     private static volatile int SCHEDULED_INTERVAL = 5;
 
-    private Runnable scheduledTask = () -> {
-        System.out.println("Scheduled task is running on thread: " + Thread.currentThread().getName());
-    };
+    private final Runnable scheduledTask = () -> System.out.println("Scheduled task is running on thread: " + Thread.currentThread().getName());
 
     private ScheduledFuture<?> taskFuture;
 
